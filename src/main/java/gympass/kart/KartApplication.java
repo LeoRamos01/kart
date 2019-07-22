@@ -23,7 +23,7 @@ public class KartApplication {
 		
 		List<Piloto> pilotos = new Tratamento().retornaPilotos(lista);
 		
-		System.out.println(pilotos);
+		
 		
 	}
 	
