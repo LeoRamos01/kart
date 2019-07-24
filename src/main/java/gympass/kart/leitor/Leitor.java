@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,12 @@ public class Leitor {
 		
 		String numeroVolta = linhaTxt.substring(58, 59);
 
-		String tempoVolta = "00:0" + linhaTxt.substring(64, 72);
+		String tempoMinutoVolta = linhaTxt.substring(64, 65);
+		String tempoSegundoVolta = linhaTxt.substring(66, 68);
+		String tempoMillisVolta = linhaTxt.substring(69, 72);
+		
+		Duration tempoVolta = Duration.ofMinutes(Integer.parseInt(tempoMinutoVolta)).plusSeconds(Integer.parseInt(tempoSegundoVolta))
+				.plusMillis(Integer.parseInt(tempoMillisVolta));
 
 		String velocidadeMediaVolta = linhaTxt.substring(96, 102).trim().replace(",", ".");
 		
@@ -79,7 +85,7 @@ public class Leitor {
 				nomePiloto, 
 				idPiloto, 
 				Integer.parseInt(numeroVolta), 
-				LocalTime.parse(tempoVolta), 
+				tempoVolta, 
 				new BigDecimal(velocidadeMediaVolta));
 		
 		return linha;

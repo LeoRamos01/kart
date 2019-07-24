@@ -1,6 +1,7 @@
 package gympass.kart.vo;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalTime;
 
 /**
@@ -29,14 +30,14 @@ public class Linha {
 
 	private Integer numeroVolta;
 
-	private LocalTime tempoVolta;
+	private Duration tempoVolta;
 
 	private BigDecimal velocidadeMediaVolta;
 	
 	public Linha() {
 	}
 
-	public Linha(LocalTime hora, String nomePiloto, String idPiloto, Integer numeroVolta, LocalTime tempoVolta,
+	public Linha(LocalTime hora, String nomePiloto, String idPiloto, Integer numeroVolta, Duration tempoVolta,
 			BigDecimal velocidadeMediaVolta) {
 		super();
 		this.hora = hora;
@@ -79,11 +80,11 @@ public class Linha {
 		this.numeroVolta = numeroVolta;
 	}
 
-	public LocalTime getTempoVolta() {
+	public Duration getTempoVolta() {
 		return tempoVolta;
 	}
 
-	public void setTempoVolta(LocalTime tempoVolta) {
+	public void setTempoVolta(Duration tempoVolta) {
 		this.tempoVolta = tempoVolta;
 	}
 

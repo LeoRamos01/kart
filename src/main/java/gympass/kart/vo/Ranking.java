@@ -1,6 +1,6 @@
 package gympass.kart.vo;
 
-import java.time.LocalTime;
+import java.time.Duration;
 
 /**
  * 
@@ -19,13 +19,15 @@ public class Ranking {
 	
 	private Integer voltasCompletas;
 	
-	private LocalTime tempoTotal;
+	private Duration tempoTotal;
+	
+	private String duracao;
 	
 	public Ranking() {
 	}
 	
 	public Ranking(Integer posicaoChegada, String idPiloto, String nomePiloto, Integer voltasCompletas,
-			LocalTime tempoTotal) {
+			Duration tempoTotal) {
 		super();
 		this.posicaoChegada = posicaoChegada;
 		this.idPiloto = idPiloto;
@@ -34,11 +36,11 @@ public class Ranking {
 		this.tempoTotal = tempoTotal;
 	}
 
-	public LocalTime getTempoTotal() {
+	public Duration getTempoTotal() {
 		return tempoTotal;
 	}
 
-	public void setTempoTotal(LocalTime tempoTotal) {
+	public void setTempoTotal(Duration tempoTotal) {
 		this.tempoTotal = tempoTotal;
 	}
 
@@ -74,12 +76,30 @@ public class Ranking {
 		this.voltasCompletas = voltasCompletas;
 	}
 
+	public String getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(String duracao) {
+		this.duracao = duracao;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Ranking [posicaoChegada=").append(posicaoChegada).append(", idPiloto=").append(idPiloto)
-				.append(", nomePiloto=").append(nomePiloto).append(", voltasCompletas=").append(voltasCompletas)
-				.append(", tempoTotal=").append(tempoTotal).append("]");
+		builder.append("Ranking [posicaoChegada=");
+		builder.append(posicaoChegada);
+		builder.append(", idPiloto=");
+		builder.append(idPiloto);
+		builder.append(", nomePiloto=");
+		builder.append(nomePiloto);
+		builder.append(", voltasCompletas=");
+		builder.append(voltasCompletas);
+		builder.append(", tempoTotal=");
+		builder.append(tempoTotal);
+		builder.append(", duracao=");
+		builder.append(duracao);
+		builder.append("]");
 		return builder.toString();
 	}
 	
