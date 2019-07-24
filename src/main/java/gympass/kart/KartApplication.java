@@ -27,7 +27,7 @@ public class KartApplication {
 		
 		List<Ranking> rankings = new CalculaRanking().getRanking(pilotos);
 		
-		rankings.stream().map(r -> r.getDuracao()).forEach(System.out::println);
+		rankings.forEach(System.out::println);
 	}
 	
 }

@@ -39,9 +39,24 @@ public class CalculaRanking {
 		});
 		
 		Collections.sort(rankings, Comparator.comparing(Ranking::getTempoTotal));
+		
+		setaColocacoes(rankings);
 
 		return rankings;
 
+	}
+
+	/**
+	 * 
+	 * A lista já vem ordenada por menor tempo, então o primeiro é o primeiro da lista e assim por diante.
+	 * 
+	 * @param rankings
+	 */
+	private void setaColocacoes(List<Ranking> rankings) {
+		Integer aux = 0;
+		for (Ranking ranking : rankings) {
+			ranking.setPosicaoChegada(++aux);
+		}
 	}
 
 	 public String formataDuracao(long millis) {
