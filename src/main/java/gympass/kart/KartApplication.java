@@ -55,6 +55,10 @@ public class KartApplication {
 		velocidadeMediaPiloto.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
+		calculaRanking.velocidadeMediaPiloto(pilotos);
+		System.out.println("4)");
+		System.out.println("Velocidade média por piloto:");
+		System.out.println("\n===========================================================================================\n");
 		
 	}
 	

@@ -106,6 +106,16 @@ public class CalculaRanking {
 		}).collect(Collectors.toList());
 
 	}
+	
+	public void tempoPilotosAposVencedor(List<Ranking> rankings) {
+		
+		Ranking primeiro = rankings.stream().min(Comparator.comparing(Ranking::getDuracao)).get();
+		
+		rankings.remove(primeiro);
+		
+		
+		
+	}
 
 	/**
 	 * 
