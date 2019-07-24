@@ -96,8 +96,6 @@ public class Ranking {
 		builder.append(", voltasCompletas=");
 		builder.append(voltasCompletas);
 		builder.append(", tempoTotal=");
-		builder.append(tempoTotal);
-		builder.append(", duracao=");
 		builder.append(duracao);
 		builder.append("]");
 		return builder.toString();
