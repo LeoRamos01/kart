@@ -35,18 +35,18 @@ public class CalculaRanking {
 	 * @param pilotos
 	 * @return
 	 */
-	public List<Ranking> getRanking(List<Piloto> pilotos) {
+	public List<Ranking> getRankings(List<Piloto> pilotos) {
 
 		List<Ranking> rankings = new ArrayList<>();
 
 		pilotos.forEach(piloto -> {
 
-			Duration duracaoProva = piloto.getVoltas().stream().map(Volta::getTempoVolta).reduce(Duration::plus).get();
+			Duration tempoTotal = piloto.getVoltas().stream().map(Volta::getTempoVolta).reduce(Duration::plus).get();
 
 			Ranking ranking = new Ranking(null, piloto.getId(), piloto.getNome(), piloto.getVoltas().size(),
-					duracaoProva);
+					tempoTotal);
 
-			String duracao = formataDuracao(duracaoProva.toMillis());
+			String duracao = formataDuracao(tempoTotal.toMillis());
 
 			ranking.setDuracao(duracao);
 
@@ -54,12 +54,37 @@ public class CalculaRanking {
 
 		});
 
-		Collections.sort(rankings, Comparator.comparing(Ranking::getTempoTotal));
+		ordenaPorVoltasCompletasDepoisPorTempo(rankings);
 
 		setaColocacoes(rankings);
 
 		return rankings;
 
+	}
+
+	/**
+	 * 
+	 * Imagine a seguinte situação:
+	 * 
+	 * <p>
+	 * <b>O total de voltas na corrida é 3</b>
+	 * 
+	 * <p>
+	 * Piloto A completou 3 voltas em 6 minutos
+	 * 
+	 * <p>
+	 * Piloto B completou 2 voltas em 5 minutos, porém não completou a corrida.
+	 * 
+	 * <p>
+	 * Dado o exemplo acima, para evitar erros no cálculo de {@link Ranking} é
+	 * necessário primeiro ordenar pelo número de voltas e então pelo tempo.
+	 * 
+	 * 
+	 * @param rankings
+	 */
+	private void ordenaPorVoltasCompletasDepoisPorTempo(List<Ranking> rankings) {
+		Collections.sort(rankings,
+				Comparator.comparing(Ranking::getVoltasCompletas).reversed().thenComparing(Ranking::getTempoTotal));
 	}
 
 	/**
@@ -174,7 +199,7 @@ public class CalculaRanking {
 	}
 
 	/**
-	 * Recebe millis e transforma numa string com seguitne estilo: 02min:15s:698
+	 * Recebe millis e transforma numa string do seguinte estilo: 02min:15s:698
 	 * 
 	 * @param millis
 	 * @return

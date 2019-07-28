@@ -31,7 +31,7 @@ public class KartApplication {
 		
 		List<Piloto> pilotos = new Tratamento().retornaPilotos(lista);
 		
-		List<Ranking> rankings = calculaRanking.getRanking(pilotos);
+		List<Ranking> rankings = calculaRanking.getRankings(pilotos);
 		System.out.println("Problema)");
 		System.out.println("Posição Chegada, Código Piloto, Nome Piloto, Qtde Voltas Completadas e Tempo Total de Prova:");
 		rankings.forEach(System.out::println);
