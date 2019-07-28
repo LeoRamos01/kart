@@ -62,7 +62,7 @@ public class Leitor {
 	 * @param linhaTxt
 	 * @return
 	 */
-	private Linha extrairLinhaParaObjeto(String linhaTxt) {
+	protected Linha extrairLinhaParaObjeto(String linhaTxt) {
 		String hora = linhaTxt.substring(0, 12);
 
 		String idPiloto = linhaTxt.substring(18, 21);

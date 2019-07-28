@@ -75,4 +75,47 @@ public class Volta {
 		return builder.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((horaTerminoVolta == null) ? 0 : horaTerminoVolta.hashCode());
+		result = prime * result + ((idVolta == null) ? 0 : idVolta.hashCode());
+		result = prime * result + ((tempoVolta == null) ? 0 : tempoVolta.hashCode());
+		result = prime * result + ((velocidadeMediaVolta == null) ? 0 : velocidadeMediaVolta.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Volta other = (Volta) obj;
+		if (horaTerminoVolta == null) {
+			if (other.horaTerminoVolta != null)
+				return false;
+		} else if (!horaTerminoVolta.equals(other.horaTerminoVolta))
+			return false;
+		if (idVolta == null) {
+			if (other.idVolta != null)
+				return false;
+		} else if (!idVolta.equals(other.idVolta))
+			return false;
+		if (tempoVolta == null) {
+			if (other.tempoVolta != null)
+				return false;
+		} else if (!tempoVolta.equals(other.tempoVolta))
+			return false;
+		if (velocidadeMediaVolta == null) {
+			if (other.velocidadeMediaVolta != null)
+				return false;
+		} else if (!velocidadeMediaVolta.equals(other.velocidadeMediaVolta))
+			return false;
+		return true;
+	}
+
 }

@@ -9,6 +9,14 @@ import gympass.kart.vo.Linha;
 import gympass.kart.vo.Piloto;
 import gympass.kart.vo.Volta;
 
+/**
+ * 
+ * Classe responsável por transformar uma {@link List} de {@link Linha} em uma {@link List} de {@link Piloto}
+ * realizando uma série de tratamentos.
+ * 
+ * @author leonardorm
+ *
+ */
 public class Tratamento {
 
 	/**
@@ -37,6 +45,7 @@ public class Tratamento {
 	 * @return
 	 */
 	private List<Piloto> extrairPilotosComVoltas(Map<String, List<Linha>> map) {
+		
 		List<Piloto> pilotos = map.entrySet().stream().map(entry -> {
 			
 			String idPiloto = entry.getKey();
@@ -47,7 +56,9 @@ public class Tratamento {
 					l.getVelocidadeMediaVolta(), l.getHora())).collect(Collectors.toList());
 			
 			return new Piloto(idPiloto, linhasPiloto.get(0).getNomePiloto(), voltasPiloto);
+			
 		}).collect(Collectors.toList());
+		
 		return pilotos;
 	}
 
@@ -55,7 +66,7 @@ public class Tratamento {
 	 * 
 	 * Os nomes de alguns pilotos variam ao longo das linhas.
 	 * <p>
-	 * Normalizando.
+	 * Normalizando para a primeira ocorrência do nome.
 	 * 
 	 * @param map
 	 */
