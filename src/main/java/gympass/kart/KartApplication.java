@@ -32,32 +32,33 @@ public class KartApplication {
 		List<Piloto> pilotos = new Tratamento().retornaPilotos(lista);
 		
 		List<Ranking> rankings = calculaRanking.getRanking(pilotos);
-		System.out.println("1)");
+		System.out.println("Problema)");
 		System.out.println("Posição Chegada, Código Piloto, Nome Piloto, Qtde Voltas Completadas e Tempo Total de Prova:");
 		rankings.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
 		List<Pair<String, Integer>> melhorVoltaCadaPiloto = calculaRanking.melhorVoltaCadaPiloto(pilotos);
-		System.out.println("2)");
+		System.out.println("Bônus - 1)");
 		System.out.println("Melhor volta dos pilotos:");
 		melhorVoltaCadaPiloto.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
 		Pair<String, Volta> melhorVoltaCorrida = calculaRanking.melhorVoltaCorrida(pilotos);
-		System.out.println("3)");
+		System.out.println("Bônus - 2)");
 		System.out.println("Melhor volta da corrida:");
 		System.out.println(melhorVoltaCorrida);
 		System.out.println("\n===========================================================================================\n");
 		
 		List<Pair<String, BigDecimal>> velocidadeMediaPiloto = calculaRanking.velocidadeMediaPiloto(pilotos);
-		System.out.println("4)");
+		System.out.println("Bônus - 3)");
 		System.out.println("Velocidade média por piloto:");
 		velocidadeMediaPiloto.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
-		calculaRanking.velocidadeMediaPiloto(pilotos);
-		System.out.println("4)");
-		System.out.println("Velocidade média por piloto:");
+		List<Pair<String, String>> tempoPilotosAposVencedor = calculaRanking.tempoPilotosAposVencedor(rankings);
+		System.out.println("Bônus - 4)");
+		System.out.println("Tempos de atraso:");
+		tempoPilotosAposVencedor.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
 	}

@@ -11,6 +11,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import gympass.kart.vo.Piloto;
 import gympass.kart.vo.Ranking;
@@ -107,13 +110,31 @@ public class CalculaRanking {
 
 	}
 	
-	public void tempoPilotosAposVencedor(List<Ranking> rankings) {
+	public List<Pair<String, String>> tempoPilotosAposVencedor(List<Ranking> rankings) {
 		
-		Ranking primeiro = rankings.stream().min(Comparator.comparing(Ranking::getDuracao)).get();
+		Ranking primeiro = rankings.remove(0);
 		
-		rankings.remove(primeiro);
+		List<Pair<String, String>> atrasosPilotos = new ArrayList<>();
 		
+		for (Ranking ranking : rankings) {
+			
+			// 4min:15s:153
+			PeriodFormatter formatter = new PeriodFormatterBuilder()
+			        .printZeroAlways().minimumPrintedDigits(2)
+			        .appendMinutes().appendSuffix("min:").appendSeconds().appendSuffix("s:").appendMillis()
+			        .toFormatter();
+			
+			Period periodAtual = formatter.parsePeriod(ranking.getDuracao());
+			Period periodPrimeiro = formatter.parsePeriod(primeiro.getDuracao());
+			
+			Period atraso = periodAtual.minus(periodPrimeiro).normalizedStandard();
+			String atrasoString = formatter.print(atraso);
+			
+			atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), atrasoString));
+			
+		}
 		
+		return atrasosPilotos;
 		
 	}
 
