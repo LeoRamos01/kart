@@ -28,6 +28,13 @@ import gympass.kart.vo.Volta;
  */
 public class CalculaRanking {
 
+	/**
+	 * 
+	 * Transforma uma {@link List} de {@link Piloto} em uma {@link List} de {@link Ranking}.
+	 * 
+	 * @param pilotos
+	 * @return
+	 */
 	public List<Ranking> getRanking(List<Piloto> pilotos) {
 
 		List<Ranking> rankings = new ArrayList<>();
@@ -63,7 +70,7 @@ public class CalculaRanking {
 	 * @param pilotos
 	 * @return
 	 */
-	public List<Pair<String, Integer>> melhorVoltaCadaPiloto(List<Piloto> pilotos) {
+	public List<Pair<String, String>> melhorVoltaCadaPiloto(List<Piloto> pilotos) {
 
 		return pilotos.stream().map(piloto -> {
 
@@ -71,7 +78,7 @@ public class CalculaRanking {
 
 			Volta melhorVolta = piloto.getVoltas().get(0);
 
-			return Pair.of(concatenaPilotoComId(piloto), melhorVolta.getIdVolta());
+			return Pair.of(concatenaPilotoComId(piloto), "Volta: " + melhorVolta.getIdVolta());
 
 		}).collect(Collectors.toList());
 
@@ -97,6 +104,13 @@ public class CalculaRanking {
 		return lista.get(0);
 	}
 
+	/**
+	 * 
+	 * Calcula a velocidade média da corrida por piloto.
+	 * 
+	 * @param pilotos
+	 * @return
+	 */
 	public List<Pair<String, BigDecimal>> velocidadeMediaPiloto(List<Piloto> pilotos) {
 
 		return pilotos.stream().map(piloto -> {
@@ -110,6 +124,13 @@ public class CalculaRanking {
 
 	}
 	
+	/**
+	 * 
+	 * Calcula os tempos de atraso dos pilotos em relação ao vencedor.
+	 * 
+	 * @param rankings
+	 * @return
+	 */
 	public List<Pair<String, String>> tempoPilotosAposVencedor(List<Ranking> rankings) {
 		
 		Ranking primeiro = rankings.remove(0);
@@ -152,6 +173,12 @@ public class CalculaRanking {
 		}
 	}
 
+	/**
+	 * Recebe millis e transforma numa string com seguitne estilo: 02min:15s:698
+	 * 
+	 * @param millis
+	 * @return
+	 */
 	private String formataDuracao(long millis) {
 
 		long days = TimeUnit.MILLISECONDS.toDays(millis);
@@ -173,6 +200,13 @@ public class CalculaRanking {
 		return (sb.toString());
 	}
 
+	/**
+	 * 
+	 * Método auxiliar para concatenar id piloto com nome do mesmo.
+	 * 
+	 * @param piloto
+	 * @return
+	 */
 	private String concatenaPilotoComId(Piloto piloto) {
 		return piloto.getId() + " - " + piloto.getNome();
 	}

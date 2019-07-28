@@ -23,7 +23,7 @@ import gympass.kart.vo.Volta;
  */
 public class KartApplication {
 	
-	static CalculaRanking calculaRanking = new CalculaRanking();
+	private static final CalculaRanking calculaRanking = new CalculaRanking();
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -37,7 +37,7 @@ public class KartApplication {
 		rankings.forEach(System.out::println);
 		System.out.println("\n===========================================================================================\n");
 		
-		List<Pair<String, Integer>> melhorVoltaCadaPiloto = calculaRanking.melhorVoltaCadaPiloto(pilotos);
+		List<Pair<String, String>> melhorVoltaCadaPiloto = calculaRanking.melhorVoltaCadaPiloto(pilotos);
 		System.out.println("Bônus - 1)");
 		System.out.println("Melhor volta dos pilotos:");
 		melhorVoltaCadaPiloto.forEach(System.out::println);
