@@ -2,6 +2,7 @@ package gympass.kart.tratamentos;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,16 +25,16 @@ public class TratamentoTest {
 
 	@Test
 	public void testRetornaPilotos() {
-		
+
 		List<Linha> lista = TesteUtils.listLinhas();
-		
+
 		List<Piloto> pilotosRetornados = tratamento.retornaPilotos(lista);
-		
-		List<Piloto> pilotosEsperados = TesteUtils.listPilotos();
-		
+
+		List<Piloto> pilotosEsperados = new ArrayList<>(TesteUtils.listPilotos());
+
 		Collections.sort(pilotosRetornados, Comparator.comparing(Piloto::getNome));
 		Collections.sort(pilotosEsperados, Comparator.comparing(Piloto::getNome));
-		
+
 		assertEquals(pilotosEsperados, pilotosRetornados);
 	}
 
