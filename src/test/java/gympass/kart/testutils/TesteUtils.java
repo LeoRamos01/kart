@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import gympass.kart.vo.Linha;
@@ -52,7 +53,7 @@ public class TesteUtils {
 		pilotosEsperados.add(vetel);
 		pilotosEsperados.add(raikonen);
 		
-		return pilotosEsperados;
+		return Collections.unmodifiableList(pilotosEsperados);
 	}
 	
 }

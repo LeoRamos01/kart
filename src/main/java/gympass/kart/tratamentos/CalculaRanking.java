@@ -120,13 +120,12 @@ public class CalculaRanking {
 
 		List<Pair<String, Volta>> lista = pilotos.stream().map(piloto -> {
 			return Pair.of(concatenaPilotoComId(piloto),
-					piloto.getVoltas().stream().min(Comparator.comparing(Volta::getVelocidadeMediaVolta)).get());
+					piloto.getVoltas().stream().max(Comparator.comparing(Volta::getVelocidadeMediaVolta)).get());
 		}).collect(Collectors.toList());
 		
 		Collections.sort(lista, Comparator.comparing(pair -> pair.getRight().getVelocidadeMediaVolta()));
-		Collections.reverse(lista);
-
-		return lista.get(0);
+		
+		return lista.get(lista.size() - 1);
 	}
 
 	/**
@@ -158,11 +157,16 @@ public class CalculaRanking {
 	 */
 	public List<Pair<String, String>> tempoPilotosAposVencedor(List<Ranking> rankings) {
 		
-		Ranking primeiro = rankings.remove(0);
+		// Para não afetar a lista recebida.
+		List<Ranking> copia = new ArrayList<>(rankings);
+		
+		Ranking primeiro = copia.remove(0);
 		
 		List<Pair<String, String>> atrasosPilotos = new ArrayList<>();
 		
-		for (Ranking ranking : rankings) {
+		Integer voltasTotais = primeiro.getVoltasCompletas();
+		
+		for (Ranking ranking : copia) {
 			
 			// 4min:15s:153
 			PeriodFormatter formatter = new PeriodFormatterBuilder()
@@ -176,7 +180,11 @@ public class CalculaRanking {
 			Period atraso = periodAtual.minus(periodPrimeiro).normalizedStandard();
 			String atrasoString = formatter.print(atraso);
 			
-			atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), atrasoString));
+			if (voltasTotais > ranking.getVoltasCompletas()) {
+				atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), "Não completou a corrida."));
+			} else {
+				atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), atrasoString + " de atraso."));
+			}
 			
 		}
 		
