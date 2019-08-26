@@ -30,7 +30,8 @@ public class CalculaRanking {
 
 	/**
 	 * 
-	 * Transforma uma {@link List} de {@link Piloto} em uma {@link List} de {@link Ranking}.
+	 * Transforma uma {@link List} de {@link Piloto} em uma {@link List} de
+	 * {@link Ranking}.
 	 * 
 	 * @param pilotos
 	 * @return
@@ -116,15 +117,15 @@ public class CalculaRanking {
 	 * @param pilotos
 	 * @return
 	 */
-	public Pair<String,Volta> melhorVoltaCorrida(List<Piloto> pilotos) {
+	public Pair<String, Volta> melhorVoltaCorrida(List<Piloto> pilotos) {
 
 		List<Pair<String, Volta>> lista = pilotos.stream().map(piloto -> {
 			return Pair.of(concatenaPilotoComId(piloto),
 					piloto.getVoltas().stream().max(Comparator.comparing(Volta::getVelocidadeMediaVolta)).get());
 		}).collect(Collectors.toList());
-		
+
 		Collections.sort(lista, Comparator.comparing(pair -> pair.getRight().getVelocidadeMediaVolta()));
-		
+
 		return lista.get(lista.size() - 1);
 	}
 
@@ -147,7 +148,7 @@ public class CalculaRanking {
 		}).collect(Collectors.toList());
 
 	}
-	
+
 	/**
 	 * 
 	 * Calcula os tempos de atraso dos pilotos em relação ao vencedor.
@@ -156,40 +157,41 @@ public class CalculaRanking {
 	 * @return
 	 */
 	public List<Pair<String, String>> tempoPilotosAposVencedor(List<Ranking> rankings) {
-		
+
 		// Para não afetar a lista recebida.
 		List<Ranking> copia = new ArrayList<>(rankings);
-		
+
 		Ranking primeiro = copia.remove(0);
-		
+
 		List<Pair<String, String>> atrasosPilotos = new ArrayList<>();
-		
+
 		Integer voltasTotais = primeiro.getVoltasCompletas();
-		
+
 		for (Ranking ranking : copia) {
-			
+
 			// 4min:15s:153
-			PeriodFormatter formatter = new PeriodFormatterBuilder()
-			        .printZeroAlways().minimumPrintedDigits(2)
-			        .appendMinutes().appendSuffix("min:").appendSeconds().appendSuffix("s:").appendMillis()
-			        .toFormatter();
-			
+			PeriodFormatter formatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
+					.appendMinutes().appendSuffix("min:").appendSeconds().appendSuffix("s:").appendMillis()
+					.toFormatter();
+
 			Period periodAtual = formatter.parsePeriod(ranking.getDuracao());
 			Period periodPrimeiro = formatter.parsePeriod(primeiro.getDuracao());
-			
+
 			Period atraso = periodAtual.minus(periodPrimeiro).normalizedStandard();
 			String atrasoString = formatter.print(atraso);
-			
+
 			if (voltasTotais > ranking.getVoltasCompletas()) {
-				atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), "Não completou a corrida."));
+				atrasosPilotos.add(
+						Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), "Não completou a corrida."));
 			} else {
-				atrasosPilotos.add(Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), atrasoString + " de atraso."));
+				atrasosPilotos.add(
+						Pair.of(ranking.getIdPiloto() + " - " + ranking.getNomePiloto(), atrasoString + " de atraso."));
 			}
-			
+
 		}
-		
+
 		return atrasosPilotos;
-		
+
 	}
 
 	/**

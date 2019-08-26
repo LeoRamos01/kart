@@ -32,26 +32,26 @@ public class Leitor {
 	 * @throws IOException
 	 */
 	public List<Linha> ler() throws IOException {
-		
+
 		InputStream is = new FileInputStream(filePath);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
 		pularCabecalho(reader, 1);
-		
+
 		List<Linha> lista = new ArrayList<Linha>();
 		String linhaTxt = null;
-		
+
 		while ((linhaTxt = reader.readLine()) != null) {
-			
+
 			Linha linha = extrairLinhaParaObjeto(linhaTxt);
 
 			lista.add(linha);
-			
+
 		}
-		
+
 		reader.close();
 		is.close();
-		
+
 		return lista;
 	}
 
@@ -66,28 +66,23 @@ public class Leitor {
 		String hora = linhaTxt.substring(0, 12);
 
 		String idPiloto = linhaTxt.substring(18, 21);
-		
+
 		String nomePiloto = linhaTxt.substring(24, 38).trim();
-		
+
 		String numeroVolta = linhaTxt.substring(58, 59);
 
 		String tempoMinutoVolta = linhaTxt.substring(64, 65);
 		String tempoSegundoVolta = linhaTxt.substring(66, 68);
 		String tempoMillisVolta = linhaTxt.substring(69, 72);
-		
-		Duration tempoVolta = Duration.ofMinutes(Integer.parseInt(tempoMinutoVolta)).plusSeconds(Integer.parseInt(tempoSegundoVolta))
-				.plusMillis(Integer.parseInt(tempoMillisVolta));
+
+		Duration tempoVolta = Duration.ofMinutes(Integer.parseInt(tempoMinutoVolta))
+				.plusSeconds(Integer.parseInt(tempoSegundoVolta)).plusMillis(Integer.parseInt(tempoMillisVolta));
 
 		String velocidadeMediaVolta = linhaTxt.substring(96, 102).trim().replace(",", ".");
-		
-		Linha linha = new Linha(
-				LocalTime.parse(hora),
-				nomePiloto, 
-				idPiloto, 
-				Integer.parseInt(numeroVolta), 
-				tempoVolta, 
+
+		Linha linha = new Linha(LocalTime.parse(hora), nomePiloto, idPiloto, Integer.parseInt(numeroVolta), tempoVolta,
 				new BigDecimal(velocidadeMediaVolta));
-		
+
 		return linha;
 	}
 
@@ -104,5 +99,5 @@ public class Leitor {
 			reader.readLine();
 		}
 	}
-	
+
 }
